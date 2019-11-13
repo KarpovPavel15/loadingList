@@ -1,3 +1,13 @@
-button{
-    border: 1px solid black;
+.form-list{
+    border: 1px solid;
+    height: 400px;
+    width: 450px;
+    overflow-y: scroll;
+}
+.form-list_message{
+    border: 1px solid;
+    height: 100%;
+}
+.form-list_message_number{
+    border: 1px solid;
 }
