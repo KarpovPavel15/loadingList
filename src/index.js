@@ -3,26 +3,31 @@ import {templateList} from './templateList.js';
 import {DATA} from './data.js';
 
 function component() {
-    let i;
-    let b=20;
+    let b = 19;
+    let c = 40;
     let form = document.querySelector(".form-list_message");
     let app = document.querySelector(".form-list");
-    for (i = 0; i < b; i++) {
-        let inputMessages = templateList({content: DATA[i]});
-        form.append(inputMessages);
-    }
+
+    DATA.forEach((i, element) => {
+        if (element <= b) {
+            let inputMessages = templateList({content: DATA[element]});
+            form.append(inputMessages);
+        }
+    });
+
     const scrollLoading = (event) => {
         let {scrollHeight, scrollTop, offsetHeight} = event.target;
         console.log(scrollHeight, scrollTop, offsetHeight);
         if (scrollHeight < scrollTop + offsetHeight) {
-            for (; i < b + b; i++) {
-                if(i>=DATA.length){
-                    break
+
+            DATA.forEach((i, element) => {
+                if(element>b && element<c){
+                    let inputMessages = templateList({content: DATA[element]});
+                    form.append(inputMessages);
                 }
-                let inputMessages = templateList({content: DATA[i]});
-                form.append(inputMessages);
-            }
-            b=b+20;
+            });
+            b=c;
+            c+=20;
         }
 
     };
