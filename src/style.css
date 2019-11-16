@@ -8,12 +8,9 @@
     border: 1px solid;
     height: 100%;
 }
-.form-list_message_number{
+.form-list_message_content{
     border: 1px solid;
 }
 .inputData{
-    width: 36.6%;
-}
-.hide{
-    display: none;
+    width: 29.6%;
 }
