@@ -1,51 +1,50 @@
 import './style.css';
 import {templateList} from './templateList.js';
-import {DATA} from './data.js';
+import {DATA as INITIAL_DATA} from './data.js';
+
+let CURRENT_DATA = INITIAL_DATA;
 
 function component() {
-    let b = 19;
-    let c = 40;
-    let arr = [];
-    let form = document.querySelector(".form-list_message");
-    let app = document.querySelector(".form-list");
-    let input = document.querySelector(".inputData");
+    let countElemForFirstLoad = 19;
+    let countLastElemForLoad = 40;
+    const form = document.querySelector(".form-list_message");
+    const app = document.querySelector(".form-list");
+    const input = document.querySelector(".inputData");
+    const messages = document.getElementsByClassName("form-list_message_number");
 
-    DATA.forEach((i, element) => {
-        if (element <= b) {
-            let inputMessages = templateList({content: DATA[element]});
-            form.append(inputMessages);
-        }
+    CURRENT_DATA.slice(0, countElemForFirstLoad).forEach((element, index) => {
+        form.append(templateList({content: CURRENT_DATA[index]}))
     });
 
     const scrollLoading = (event) => {
         let {scrollHeight, scrollTop, offsetHeight} = event.target;
-        // console.log(scrollHeight, scrollTop, offsetHeight);
         if (scrollHeight < scrollTop + offsetHeight) {
-
-            DATA.forEach((i, element) => {
-                if (element > b && element < c) {
-                    form.append(templateList({content: DATA[element]}));
-                }
-            });
-            b = c;
-            c += 20;
+            CURRENT_DATA.slice(countElemForFirstLoad, countLastElemForLoad)
+                .forEach((element, index) => form.append(templateList({content: CURRENT_DATA[index]})));
+            countElemForFirstLoad = countLastElemForLoad;
+            countLastElemForLoad += 20;
         }
     };
-    const getMessages = () => {
-        let newArray = input.value.trim().toLowerCase();
-        let elementsForm = document.querySelectorAll(".form-list_message .form-list_message_number");
-        elementsForm.forEach((elem) => {
-            if (elem.innerHTML.toLowerCase().search(newArray.trim()) === -1) {
-                elem.classList.add('hide');
-            } else {
-                elementsForm.forEach((elem) => {
-                    elem.classList.remove('hide');
-                })
-            }
-        });
+    const clear = () => {
+        let elements = messages;
+        while (elements.length > 0) {
+            elements[0].parentNode.removeChild(elements[0]);
+        }
+    };
+    const searchMessages = () => {
+        clear();
+        let inputValue = input.value.trim().toLowerCase();
+        const includeElements = INITIAL_DATA.filter(
+            element => element.toLowerCase().includes(inputValue)
+        );
+        includeElements
+            .forEach((element, index) => {
+                form.append(templateList({content: includeElements[index]}))
+            });
+        CURRENT_DATA = includeElements;
     };
     app.addEventListener('scroll', scrollLoading);
-    input.addEventListener('keyup', getMessages);
+    input.addEventListener('keyup', searchMessages);
     return app;
 }
 
