@@ -1,7 +1,6 @@
 import {DATA as INITIAL_DATA} from "../data";
 import {templateList} from "./templateList";
 import {MESSAGE,FORM,INPUT} from "../constants/constant";
-import {CURRENT_DATA} from "../index"
 const form = FORM;
 const messages = MESSAGE;
 const input = INPUT;
@@ -13,7 +12,7 @@ const clear = () => {
     }
 };
 
-export const searchMessages = () => {
+export const searchMessages = (CURRENT_DATA) => {
     clear();
     let inputValue = input.value.trim().toLowerCase();
     const includeElements = INITIAL_DATA.filter(
@@ -24,4 +23,5 @@ export const searchMessages = () => {
             form.append(templateList({content: includeElements[index]}))
         });
     CURRENT_DATA = includeElements;
+    return CURRENT_DATA
 };
