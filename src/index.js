@@ -12,15 +12,13 @@ function component() {
     const input = document.querySelector(".inputData");
     const messages = document.getElementsByClassName("form-list_message_number");
 
-    CURRENT_DATA.slice(0, countElemForFirstLoad).forEach((element, index) => {
-        form.append(templateList({content: CURRENT_DATA[index]}))
-    });
+    CURRENT_DATA.slice(0, countElemForFirstLoad).forEach(element => form.append(templateList({content: element})));
 
-    const scrollLoading = (event) => {
-        let {scrollHeight, scrollTop, offsetHeight} = event.target;
+    const scrollLoading = event => {
+        const {scrollHeight, scrollTop, offsetHeight} = event.target;
         if (scrollHeight < scrollTop + offsetHeight) {
             CURRENT_DATA.slice(countElemForFirstLoad, countLastElemForLoad)
-                .forEach((element, index) => form.append(templateList({content: CURRENT_DATA[index]})));
+                .forEach(element => form.append(templateList({content: element})));
             countElemForFirstLoad = countLastElemForLoad;
             countLastElemForLoad += 20;
         }
@@ -31,17 +29,20 @@ function component() {
             elements[0].parentNode.removeChild(elements[0]);
         }
     };
-    const searchMessages = () => {
+    const searchMessages = (event) => {
         clear();
         let inputValue = input.value.trim().toLowerCase();
         const includeElements = INITIAL_DATA.filter(
             element => element.toLowerCase().includes(inputValue)
         );
-        includeElements
-            .forEach((element, index) => {
-                form.append(templateList({content: includeElements[index]}))
-            });
-        CURRENT_DATA = includeElements;
+        const {scrollHeight, scrollTop, offsetHeight} = event.target;
+        let countElemForFirstLoadSearch=0;
+        let countLastElemForLoadSearch=20;
+        if (scrollHeight < scrollTop + offsetHeight) {
+            includeElements.slice(countElemForFirstLoadSearch, countLastElemForLoadSearch)
+                .forEach(element => form.append(templateList({content: element})));
+            CURRENT_DATA = includeElements;
+        }
     };
     app.addEventListener('scroll', scrollLoading);
     input.addEventListener('keyup', searchMessages);
