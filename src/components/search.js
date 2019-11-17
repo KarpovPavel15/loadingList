@@ -1,8 +1,7 @@
 import {DATA as INITIAL_DATA} from "../data";
 import {templateList} from "./templateList";
 import {MESSAGE,FORM,INPUT} from "../constants/constant";
-
-let CURRENT_DATA = INITIAL_DATA;
+import {CURRENT_DATA} from "../index"
 const form = FORM;
 const messages = MESSAGE;
 const input = INPUT;

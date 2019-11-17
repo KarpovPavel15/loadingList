@@ -4,7 +4,7 @@ import {DATA as INITIAL_DATA} from './data.js';
 import {scrollLoading} from "./components/scroll";
 import {searchMessages} from "./components/search";
 
-let CURRENT_DATA = INITIAL_DATA;
+export let CURRENT_DATA = INITIAL_DATA;
 
 function component() {
     let countElemForFirstLoad = 19;
@@ -12,9 +12,9 @@ function component() {
     const app = document.querySelector(".form-list");
     const input = document.querySelector(".inputData");
 
-    CURRENT_DATA.slice(0, countElemForFirstLoad).forEach((element, index) => {
-        form.append(templateList({content: CURRENT_DATA[index]}))
-    });
+    CURRENT_DATA
+        .slice(0, countElemForFirstLoad)
+        .forEach(element => form.append(templateList({content:element})));
 
     app.addEventListener('scroll', scrollLoading);
     input.addEventListener('keyup', searchMessages);
