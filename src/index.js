@@ -14,7 +14,7 @@ function component() {
         .slice(0, countElemForFirstLoad)
         .forEach(element => form.append(templateList({content: element})));
     app.addEventListener('scroll', scrollLoading);
-    input.addEventListener('keyup', searchMessages(CURRENT_DATA));
+    input.addEventListener('keyup', searchMessages);
     return app;
 }
 
