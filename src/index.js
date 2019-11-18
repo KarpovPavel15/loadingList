@@ -5,22 +5,23 @@ import {DATA as INITIAL_DATA} from './data.js';
 let CURRENT_DATA = INITIAL_DATA;
 
 function component() {
-    let countElemForFirstLoad = 19;
-    let countLastElemForLoad = 40;
-    const form = document.querySelector(".form-list_message");
+    let countElemForFirstLoad = 29;
+    let countLastElemForLoad = 60;
     const app = document.querySelector(".form-list");
     const input = document.querySelector(".inputData");
     const messages = document.getElementsByClassName("form-list_message_number");
 
-    CURRENT_DATA.slice(0, countElemForFirstLoad).forEach(element => form.append(templateList({content: element})));
+    CURRENT_DATA
+        .slice(0, countElemForFirstLoad)
+        .forEach(element => app.append(templateList({content: element})));
 
     const scrollLoading = event => {
         const {scrollHeight, scrollTop, offsetHeight} = event.target;
         if (scrollHeight < scrollTop + offsetHeight) {
             CURRENT_DATA.slice(countElemForFirstLoad, countLastElemForLoad)
-                .forEach(element => form.append(templateList({content: element})));
+                .forEach(element => app.append(templateList({content: element})));
             countElemForFirstLoad = countLastElemForLoad;
-            countLastElemForLoad += 20;
+            countLastElemForLoad += 30;
         }
     };
     const clear = () => {
@@ -29,18 +30,17 @@ function component() {
             elements[0].parentNode.removeChild(elements[0]);
         }
     };
-    const searchMessages = (event) => {
+    const searchMessages = event => {
         clear();
         let inputValue = input.value.trim().toLowerCase();
         const includeElements = INITIAL_DATA.filter(
             element => element.toLowerCase().includes(inputValue)
         );
         const {scrollHeight, scrollTop, offsetHeight} = event.target;
-        let countElemForFirstLoadSearch=0;
-        let countLastElemForLoadSearch=20;
         if (scrollHeight < scrollTop + offsetHeight) {
-            includeElements.slice(countElemForFirstLoadSearch, countLastElemForLoadSearch)
-                .forEach(element => form.append(templateList({content: element})));
+            includeElements
+                .slice(0, 20)
+                .forEach(element => app.append(templateList({content: element})));
             CURRENT_DATA = includeElements;
         }
     };

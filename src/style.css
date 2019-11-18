@@ -6,14 +6,13 @@
 }
 .form-list_message{
     border: 1px solid;
-    height: 100%;
-}
-.form-list_message_number{
-    border: 1px solid;
 }
 .inputData{
     width: 36.6%;
 }
 .hide{
     display: none;
+}
+.form-list_message_number{
+    border: 1px solid black;
 }
